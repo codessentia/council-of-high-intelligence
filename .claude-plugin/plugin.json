@@ -7,8 +7,8 @@
     "name": "0xNyk",
     "url": "https://github.com/0xNyk"
   },
-  "homepage": "https://github.com/0xNyk/council-of-high-intelligence",
-  "repository": "https://github.com/0xNyk/council-of-high-intelligence",
+  "homepage": "https://github.com/codessentia/council-of-high-intelligence",
+  "repository": "https://github.com/codessentia/council-of-high-intelligence",
   "license": "MIT",
   "keywords": [
     "deliberation",
@@ -17,5 +17,8 @@
     "debate",
     "personas",
     "multi-llm"
-  ]
+  ],
+  "metadata": {
+    "upstream": "https://github.com/0xNyk/council-of-high-intelligence"
+  }
 }

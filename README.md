@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/0xNyk/council-of-high-intelligence/actions/workflows/lint.yml"><img src="https://github.com/0xNyk/council-of-high-intelligence/actions/workflows/lint.yml/badge.svg" alt="Lint"></a>
-  <a href="https://github.com/0xNyk/council-of-high-intelligence/releases"><img src="https://img.shields.io/github/v/release/0xNyk/council-of-high-intelligence" alt="Release"></a>
+  <a href="https://github.com/codessentia/council-of-high-intelligence/actions/workflows/lint.yml"><img src="https://github.com/codessentia/council-of-high-intelligence/actions/workflows/lint.yml/badge.svg" alt="Lint"></a>
+  <a href=".claude-plugin/plugin.json"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcodessentia%2Fcouncil-of-high-intelligence%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=plugin&color=blue" alt="Plugin version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
 </p>
 
@@ -24,14 +24,23 @@ preserves unresolved questions, dissent, kill criteria, and the next concrete ac
 
 ## Try a council
 
-Claude Code users can install the plugin directly:
+The repository is a Claude Code plugin and its own marketplace. Register the marketplace
+once, then install the plugin:
+
+```bash
+claude plugin marketplace add codessentia/council-of-high-intelligence
+claude plugin install council@council-of-high-intelligence
+```
+
+The same two steps work from inside a session:
 
 ```text
-/plugin marketplace add 0xNyk/council-of-high-intelligence
+/plugin marketplace add codessentia/council-of-high-intelligence
 /plugin install council@council-of-high-intelligence
 ```
 
-Then convene the full council, a faster panel, or a two-member dialectic:
+Start a new session (or run `/reload-plugins`) and convene the full council, a faster
+panel, or a two-member dialectic:
 
 ```text
 /council Should we open-source our agent framework?
@@ -39,10 +48,21 @@ Then convene the full council, a faster panel, or a two-member dialectic:
 /council --duo Should we use microservices or a monolith?
 ```
 
+`/council` is the short form of `/council:council`; use the long form if another plugin
+also claims `/council`. The 18 members install as subagents too — call one directly with
+`@agent-council:council-socrates`, or let Claude pick one from its description.
+
+To try a checkout without installing anything, load it for a single session:
+
+```bash
+git clone https://github.com/codessentia/council-of-high-intelligence.git
+claude --plugin-dir ./council-of-high-intelligence
+```
+
 For Codex, Gemini CLI, or OpenCode, clone once and use the matching installer flag:
 
 ```bash
-git clone https://github.com/0xNyk/council-of-high-intelligence.git
+git clone https://github.com/codessentia/council-of-high-intelligence.git
 cd council-of-high-intelligence
 
 ./install.sh --codex-only
@@ -99,7 +119,7 @@ Named triads select three relevant lenses without assembling the whole council:
 Available domains include `architecture`, `strategy`, `ethics`, `debugging`, `risk`,
 `shipping`, `product`, `founder`, `ai`, `ai-product`, `ai-safety`, `decision`, `systems`,
 `uncertainty`, `design`, `economics`, and `bias`. The canonical routing table lives in
-[`SKILL.md`](SKILL.md).
+[`skills/council/SKILL.md`](skills/council/SKILL.md).
 
 ## What the protocol protects
 
@@ -160,7 +180,7 @@ protocol, a method, known blind spots, and a structured response contract.
 
 The repository stores each member contract under [`agents/`](agents/). Custom panels can
 use `--members`, named triads, or the `classic`, `exploration-orthogonal`, and
-`execution-lean` profiles documented in [`SKILL.md`](SKILL.md).
+`execution-lean` profiles documented in [`skills/council/SKILL.md`](skills/council/SKILL.md).
 
 ## Multi-provider routing
 
@@ -192,8 +212,14 @@ native host.
 
 ## Installation reference
 
+The plugin install above is the recommended path for Claude Code: it keeps the council
+current through `claude plugin update`, namespaces the agents, and writes nothing into
+`~/.claude/agents/`. `install.sh` remains for the other hosts and for Claude Code setups
+that cannot use plugins; it copies `skills/council/SKILL.md`, the agents, and the
+detection script into the host's config directory.
+
 ```bash
-./install.sh                         # Claude Code
+./install.sh                         # Claude Code (copy into ~/.claude, no plugin)
 ./install.sh --codex                 # Claude Code + Codex
 ./install.sh --codex-only            # Codex only
 ./install.sh --gemini                # Claude Code + Gemini CLI
@@ -210,43 +236,54 @@ Custom target directories are supported through `--claude-dir`, `--codex-dir`,
 ## Verify the checkout
 
 ```bash
+claude plugin validate .
 ./scripts/council-simulation-checklist.sh
+./scripts/validate-roster.py
 ./install.sh --dry-run --codex
 ./install.sh --dry-run --gemini
 ./install.sh --dry-run --opencode
 ```
 
-The checklist validates persona structure, host-protocol parity, routing configuration,
-execution checkpoints, verdict fields, and installer behavior. Use the
-[demo session pack](demos/session-pack.md) to exercise full, quick, and duo modes.
+`claude plugin validate` reads the manifests, the skill, and the agent frontmatter the way
+the plugin loader does. The checklist validates persona structure, host-protocol parity,
+routing configuration, execution checkpoints, verdict fields, and installer behavior. Use
+the [demo session pack](demos/session-pack.md) to exercise full, quick, and duo modes.
 
 ## Repository map
 
 ```text
-SKILL.md                    canonical coordinator protocol
-SKILL.codex.md              Codex host mirror
-SKILL.gemini.md             Gemini CLI host mirror
-SKILL.opencode.md           OpenCode host mirror
-agents/                     18 grounded persona contracts
-configs/                    provider and model-routing examples
-demos/                      sample sessions and verdict template
-scripts/                    detection, conversion, and validation tools
-assets/                     brand system and README visuals
-install.sh                  multi-host installer
+.claude-plugin/plugin.json       Claude Code plugin manifest
+.claude-plugin/marketplace.json  marketplace entry so the repo installs itself
+skills/council/SKILL.md          canonical coordinator protocol — the /council skill
+agents/                          18 grounded persona contracts — the plugin's subagents
+SKILL.codex.md                   Codex host mirror
+SKILL.gemini.md                  Gemini CLI host mirror
+SKILL.opencode.md                OpenCode host mirror
+configs/                         provider and model-routing examples
+demos/                           sample sessions and verdict template
+scripts/                         detection, conversion, and validation tools
+assets/                          brand system and README visuals
+install.sh                       multi-host installer (non-plugin path)
 ```
 
-Protocol changes start in `SKILL.md` and must remain behaviorally aligned with each host
-mirror. See [CONTRIBUTING.md](CONTRIBUTING.md) for the required checks and review contract.
+Protocol changes start in `skills/council/SKILL.md` and must remain behaviorally aligned
+with each host mirror. See [CONTRIBUTING.md](CONTRIBUTING.md) for the required checks and review contract.
 Security reports belong in [SECURITY.md](SECURITY.md), not a public issue.
 
 ## Project links
 
+This repository is a fork of
+[0xNyk/council-of-high-intelligence](https://github.com/0xNyk/council-of-high-intelligence)
+that finishes the Claude Code plugin packaging (a real skill file, plugin-root asset
+paths) and publishes it through its own marketplace. The protocol, the personas, and the
+brand are the upstream author's work.
+
 - [Release history](CHANGELOG.md)
 - [Brand kit](assets/BRAND.md)
-- [OSS profile](https://www.nyk.dev/oss/council-of-high-intelligence)
-- [Sponsor ongoing maintenance](https://github.com/sponsors/0xNyk)
-- [Maintainer: Nyk](https://nyk.dev) · [@nykdotdev](https://x.com/nykdotdev)
-- [Issues](https://github.com/0xNyk/council-of-high-intelligence/issues)
+- [Upstream project](https://github.com/0xNyk/council-of-high-intelligence) · [OSS profile](https://www.nyk.dev/oss/council-of-high-intelligence)
+- [Sponsor the upstream maintainer](https://github.com/sponsors/0xNyk)
+- [Upstream maintainer: Nyk](https://nyk.dev) · [@nykdotdev](https://x.com/nykdotdev)
+- [Upstream issues](https://github.com/0xNyk/council-of-high-intelligence/issues)
 
 <p align="center">
   <picture>

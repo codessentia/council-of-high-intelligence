@@ -1,9 +1,9 @@
 {
   "name": "council-of-high-intelligence",
-  "description": "Official marketplace for the Council of High Intelligence — multi-persona, multi-provider deliberation for Claude Code.",
+  "description": "Marketplace for the Council of High Intelligence plugin — multi-persona, multi-provider deliberation for Claude Code (codessentia fork of 0xNyk/council-of-high-intelligence).",
   "owner": {
-    "name": "0xNyk",
-    "url": "https://github.com/0xNyk"
+    "name": "codessentia",
+    "url": "https://github.com/codessentia"
   },
   "plugins": [
     {
