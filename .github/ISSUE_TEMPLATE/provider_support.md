@@ -11,7 +11,7 @@ labels: enhancement, provider
 
 ## Which integration path
 
-- [ ] New **deliberation seat** provider (members routed to it) — usually fits the existing `openai_compatible_api` archetype or a new exec archetype in `SKILL.md` STEP 2
+- [ ] New **deliberation seat** provider (members routed to it) — usually fits the existing `openai_compatible_api` archetype or a new exec archetype in `skills/council/SKILL.md` STEP 2
 - [ ] New **host coordinator** (a new `SKILL.<host>.md` + `install.sh --<host>` path, like Codex/Gemini)
 
 ## Detection

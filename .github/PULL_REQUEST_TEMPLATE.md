@@ -6,7 +6,7 @@
 
 Protocol features live in four coordinator files that must not drift:
 
-- [ ] Change applied to `SKILL.md` (or N/A)
+- [ ] Change applied to `skills/council/SKILL.md` (or N/A)
 - [ ] Mirrored in `SKILL.codex.md` (or N/A / host-exempt with reason)
 - [ ] Mirrored in `SKILL.gemini.md` (or N/A / host-exempt with reason)
 - [ ] Mirrored in `SKILL.opencode.md` (or N/A / host-exempt with reason)

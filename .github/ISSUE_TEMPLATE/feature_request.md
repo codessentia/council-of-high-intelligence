@@ -11,7 +11,7 @@ labels: enhancement
 
 ## Proposed change
 
-<!-- What should change? Protocol changes land in SKILL.md first, then get mirrored into SKILL.codex.md and SKILL.gemini.md — say if your proposal is host-specific. -->
+<!-- What should change? Protocol changes land in skills/council/SKILL.md first, then get mirrored into SKILL.codex.md and SKILL.gemini.md — say if your proposal is host-specific. -->
 
 ## Evidence (encouraged)
 
@@ -19,7 +19,7 @@ labels: enhancement
 
 ## Scope
 
-- [ ] Affects `SKILL.md` (Claude coordinator)
+- [ ] Affects `skills/council/SKILL.md` (Claude coordinator)
 - [ ] Affects `SKILL.codex.md` / `SKILL.gemini.md` mirrors
 - [ ] Affects agent personas (`agents/`)
 - [ ] Affects installer / scripts / configs

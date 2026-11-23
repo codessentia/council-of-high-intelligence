@@ -47,8 +47,10 @@ jobs:
         # The repo is a Claude Code plugin and its own marketplace. This catches
         # a manifest error, a skill the loader cannot read (a symlink, say), or
         # a broken agent frontmatter before a user hits it on `claude plugin install`.
+        # Pinned so a CLI release cannot turn CI red without a code change;
+        # bump deliberately after re-running `claude plugin validate .` locally.
         run: |
-          npm install -g @anthropic-ai/claude-code
+          npm install -g @anthropic-ai/claude-code@2.1.330
           claude plugin validate .
 
       - name: Roster validation (prose vs frontmatter)
