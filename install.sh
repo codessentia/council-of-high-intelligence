@@ -144,8 +144,8 @@ if [[ ! -d "${SCRIPT_DIR}/agents" ]]; then
   exit 1
 fi
 
-if [[ "${INSTALL_CLAUDE}" == true ]] && [[ ! -f "${SCRIPT_DIR}/SKILL.md" ]]; then
-  echo "Error: SKILL.md not found at ${SCRIPT_DIR}/SKILL.md" >&2
+if [[ "${INSTALL_CLAUDE}" == true ]] && [[ ! -f "${SCRIPT_DIR}/skills/council/SKILL.md" ]]; then
+  echo "Error: skills/council/SKILL.md not found at ${SCRIPT_DIR}/skills/council/SKILL.md" >&2
   exit 1
 fi
 
@@ -195,7 +195,7 @@ if [[ "${INSTALL_CLAUDE}" == true ]]; then
   done
 
   echo "Installing Claude council skill..."
-  run_cmd install -m 0644 "${SCRIPT_DIR}/SKILL.md" "${CLAUDE_SKILL_DEST}"
+  run_cmd install -m 0644 "${SCRIPT_DIR}/skills/council/SKILL.md" "${CLAUDE_SKILL_DEST}"
 
   echo "Installing Claude council scripts..."
   run_cmd mkdir -p "${CLAUDE_SCRIPTS_DEST_DIR}"

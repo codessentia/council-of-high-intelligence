@@ -39,9 +39,17 @@ jobs:
         run: |
           markdownlint --config .markdownlint.json \
             README.md CONTRIBUTING.md CHANGELOG.md CLAUDE.md \
-            SKILL.md SKILL.codex.md SKILL.gemini.md SKILL.opencode.md \
+            skills/council/SKILL.md SKILL.codex.md SKILL.gemini.md SKILL.opencode.md \
             "agents/**/*.md" \
             "demos/**/*.md"
+
+      - name: Claude Code plugin validation
+        # The repo is a Claude Code plugin and its own marketplace. This catches
+        # a manifest error, a skill the loader cannot read (a symlink, say), or
+        # a broken agent frontmatter before a user hits it on `claude plugin install`.
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude plugin validate .
 
       - name: Roster validation (prose vs frontmatter)
         # The checklist below greps for protocol features; this checks that the

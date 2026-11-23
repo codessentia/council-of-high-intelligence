@@ -24,7 +24,7 @@ What good output looks like:
 - evidence labels across multiple categories (`empirical`, `mechanistic`, `strategic`, `ethical`, `heuristic`)
 - clear unknowns list with concrete data needed
 
-Expected verdict sections (see the Council Verdict template in `SKILL.md` for the full canonical list):
+Expected verdict sections (see the Council Verdict template in `skills/council/SKILL.md` for the full canonical list):
 - Problem, Council Composition, Chairman, Provider Routing
 - Acceptable Compromises, Kill Criteria, Concrete Next Step
 - Unresolved Questions, Recommended Next Steps, Consensus & Agreement, Vote Tally

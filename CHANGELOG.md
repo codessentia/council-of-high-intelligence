@@ -9,6 +9,14 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 - **Roster validation drift guard** — `scripts/validate-roster.py`, wired into CI. Runs 166 structural checks that `SKILL.md` prose and `agents/*.md` frontmatter describe the same council: profile sizes and enumerated member lists against `profiles:` tags, polarity pairs resolvable/mutual/mirrored in the Polarity Pairs list, `reasoning_method` uniqueness (DMAD), triad references, and roster-table parity. Panel selection reads the frontmatter while the coordinator reads the prose, so drift silently seats the wrong members with no visible error. Complements `council-simulation-checklist.sh`, which greps for protocol features rather than checking roster consistency.
 
+- `argument-hint` frontmatter on the `/council` skill, so the slash-command picker shows the flag grammar.
+- CI runs `claude plugin validate .`, and `council-simulation-checklist.sh` runs it too when the CLI is on PATH and rejects symlinks under `.claude-plugin/`, `skills/`, and `agents/`.
+
+### Changed
+- **Plugin-first layout** — `skills/council/SKILL.md` is now the canonical coordinator file, a regular file rather than a symlink to a root `SKILL.md`. `claude plugin validate` reported the symlinked skill as "not read", an installed plugin follows a symlink only on some install paths, and Windows checkouts without symlink support turned it into a one-line text file — so a marketplace install could ship no `/council` skill at all. `install.sh`, `validate-roster.py`, the checklist, markdownlint, and the docs read the new path.
+- **Plugin asset paths** — every prompt and command in the coordinator addresses agents, scripts, and configs through `${CLAUDE_PLUGIN_ROOT}/…`, which Claude Code substitutes when it loads the skill as a plugin, and spawns members as namespaced `council:council-{name}` subagents. The Asset Resolution section now leads with the plugin layout and documents the `~/.claude/…` fallback for `install.sh` layouts.
+- **Fork manifests** — `plugin.json` and `marketplace.json` point at `codessentia/council-of-high-intelligence`, so the repo installs itself with `claude plugin marketplace add codessentia/council-of-high-intelligence` followed by `claude plugin install council@council-of-high-intelligence`. Authorship stays with the upstream project; `metadata.upstream` records it.
+
 ### Fixed
 - **Socrates/Watts polarity pair was missing from the Polarity Pairs list** — mutual in frontmatter and present in the duo table, but absent from the list the coordinator reads. Added to `SKILL.md` and `SKILL.opencode.md`.
 - **Sutskever/Machiavelli polarity pair was missing from the Polarity Pairs list** — the frontmatter reciprocation landed in #51 (@xiaolai); this adds the matching prose entry to `SKILL.md` and `SKILL.opencode.md`, where the duo table already carried it.

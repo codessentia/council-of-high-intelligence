@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate that SKILL.md prose and agents/*.md frontmatter describe the same council.
+"""Validate that skills/council/SKILL.md prose and agents/*.md frontmatter describe the same council.
 
 The coordinator reads the prose; panel selection and tie-breaking read the
 frontmatter. When the two disagree the council still runs, silently seating the
@@ -82,7 +82,7 @@ def main():
     default_root = Path(__file__).resolve().parent.parent
     root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else default_root
     agents = load_agents(root / "agents")
-    skill = (root / "SKILL.md").read_text(encoding="utf-8")
+    skill = (root / "skills" / "council" / "SKILL.md").read_text(encoding="utf-8")
 
     if not agents:
         sys.exit("No agent definitions found under agents/council-*.md")
